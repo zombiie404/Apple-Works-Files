@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE foo [
-  <!ENTITY xxe SYSTEM "file:///etc/passwd">
+  <!ENTITY xxe SYSTEM "file:///etc/hostname">
 ]>
-<rss version="2.0"
-  xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
+<rss version="2.0" xmlns:itunes="http://www.itunes.apple.com/dtds/podcast-1.0.dtd">
   <channel>
     <title>&xxe;</title>
-    <description>Test</description>
-    <link>http://test.com</link>
+    <description>XXE Test</description>
+    <itunes:owner>
+      <itunes:name>&xxe;</itunes:name>
+      <itunes:email>test@test.com</itunes:email>
+    </itunes:owner>
     <language>en</language>
+    <item>
+      <title>Ep</title>
+      <enclosure url="https://example.com/a.mp3" type="audio/mpeg" length="1"/>
+    </item>
   </channel>
 </rss>
