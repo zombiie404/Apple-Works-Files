@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:itunes="http://www.itunes.apple.com/dtds/podcast-1.0.dtd">
   <channel>
-    <title>&lt;img src=x onerror=alert(document.domain)&gt;</title>
-    <link>https://example.com</link>
-    <description><![CDATA[<img src=x onerror=alert(document.cookie)>]]></description>
+    <title>Test XSS Podcast</title>
+    <link>javascript:alert(document.domain)</link>
+    <description><![CDATA[A great podcast about testing]]></description>
     <language>en</language>
-    <itunes:author><![CDATA[<svg/onload=alert('XSS')>]]></itunes:author>
+    <itunes:author>Test Author</itunes:author>
     <itunes:owner>
       <itunes:name>Test</itunes:name>
       <itunes:email>test@test.com</itunes:email>
     </itunes:owner>
     <itunes:explicit>no</itunes:explicit>
-    <itunes:image href="javascript:alert(1)"/>
+    <itunes:image href="https://via.placeholder.com/3000x3000.jpg"/>
     <itunes:category text="Technology"/>
+    <copyright>2024 Test</copyright>
     <item>
       <title>Episode 1</title>
+      <description><![CDATA[First episode]]></description>
       <enclosure url="https://example.com/ep1.mp3" type="audio/mpeg" length="10000000"/>
-      <guid>ep1-xss</guid>
+      <guid>ep1-link-xss</guid>
     </item>
   </channel>
 </rss>
