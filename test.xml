@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd">
+  <channel>
+    <title>Test</title>
+    <link>https://example.com</link>
+    <description>Test</description>
+    <item>
+      <title>Episode 1</title>
+      <enclosure url="http://0251.0376.0251.0376/latest/meta-data/" length="1024" type="audio/mpeg"/>
+      <itunes:image href="http://0xa9.0xfe.0xa9.0xfe/latest/meta-data/"/>
+    </item>
+  </channel>
+</rss>
