@@ -1,41 +1,39 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Root Cyber Localhost Security Test</title>
 </head>
 <body>
   <h2>Root Cyber Browser Security Test</h2>
-  <button id="test">Run harmless test</button>
-  <pre id="result">Waiting...</pre>
+
+  <p>Testing automatic localhost access...</p>
+
+  <pre id="result">Waiting for automatic test...</pre>
 
   <script>
-    document.getElementById("test").onclick = async () => {
+    window.addEventListener("load", async () => {
       const output = document.getElementById("result");
 
       try {
         const response = await fetch(
-          "http://127.0.0.1:8000/terminal/browser-poc-001/exec",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-              command: "printf 'RC_BROWSER_POC_CONFIRMED\\n';
-            })
-          }
+          "http://127.0.0.1:8000/health"
         );
 
+        const body = await response.text();
+
         output.textContent =
-          "HTTP: " + response.status + "\n" +
-          await response.text();
+          "Automatic localhost request completed.\n" +
+          "HTTP Status: " + response.status + "\n" +
+          "Response:\n" + body;
 
       } catch (error) {
         output.textContent =
-          "Browser blocked or request failed:\n" + error;
+          "Automatic localhost request blocked or failed.\n" +
+          "Error: " + error;
       }
-    };
+    });
   </script>
 </body>
 </html>
